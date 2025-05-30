@@ -1,84 +1,119 @@
-# MBUtil
+# mbutil
 
-MBUtil is a utility for importing and exporting the [MBTiles](http://mbtiles.org/) format,
-typically created with [Mapbox](http://mapbox.com/) [TileMill](http://mapbox.com/tilemill/).
+> A modernized fork of mbutil tool create by (c) Mapbox. 
 
-Before exporting tiles to disk, see if there's a [Mapbox Hosting plan](http://mapbox.com/plans/)
-or an open source [MBTiles server implementation](https://github.com/mapbox/mbtiles-spec/wiki/Implementations)
-that works for you - tiles on disk are notoriously difficult to manage.
+mbutil is a utility for importing and exporting the [MBTiles](http://mbtiles.org/) format, typically created with [Mapbox](http://mapbox.com/) [TileMill](http://mapbox.com/tilemill/).
 
-[![Build Status](https://secure.travis-ci.org/mapbox/mbutil.png)](http://travis-ci.org/mapbox/mbutil)
+This is an enhanced fork of the original [mapbox/mbutil](https://github.com/mapbox/mbutil) project, updated for modern Python environments and packaging standards.
 
-**Note well**: this project is no longer actively developed. Issues and pull requests will be attended to when possible, but delays should be expected.
+Before exporting tiles to disk, consider if there's a [Mapbox Hosting plan](http://mapbox.com/plans/) or an open source [MBTiles server implementation](https://github.com/mapbox/mbtiles-spec/wiki/Implementations) that works for you - tiles on disk are notoriously difficult to manage.
+
+## What's New 
+
+This enhanced version addresses the limitations of the original project and includes:
+
+- ✅ **Modern Python packaging** - Works with `pip`
+- ✅ **Improved CLI** - Better command-line interface using `argparse`
+- ✅ **Python 2.7+ and 3.6+ compatibility** - Full support for modern Python versions
+- ✅ **Proper entry points** - No more path or installation issues
+- ✅ **Enhanced error handling** - Better debugging and user experience
+- ✅ **Active maintenance** - Regular updates and bug fixes
 
 ## Installation
 
-Git checkout (requires git)
+### Quick Install
 
-    git clone https://github.com/mapbox/mbutil.git
-    cd mbutil
-    # get usage
-    ./mb-util -h
+```bash
+pip install git+https://github.com/Australes-Inc/mbutil.git
+```
 
-Then to install the mb-util command globally:
+### In a Conda Environment
 
-    sudo python setup.py install
-    # then you can run:
-    mb-util
+```bash
+# Create a new environment
+conda create -n gis python=3.9
+conda activate gis
 
-Python installation (requires easy_install)
+# Install mbutil enhanced
+pip install git+https://github.com/Australes-Inc/mbutil.git
+```
 
-    easy_install mbutil
-    mb-util -h
+### Development Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Australes-Inc/mbutil.git
+cd mbutil
+
+# Install in development mode
+pip install -e .
+```
 
 ## Usage
 
-    $ mb-util -h
-    Usage: mb-util [options] input output
+```bash
+$ mb-util -h
+usage: mb-util [-h] [--scheme {wms,tms,xyz,zyx,gwc,ags}] [--image_format {png,jpg,pbf,webp}]
+               [--grid_callback CALLBACK] [--do_compression] [--silent] [--verbose]
+               input output
 
-    Examples:
+MBUtil: Import and export MBTiles files
 
-        Export an mbtiles file to a directory of files:
-        $ mb-util world.mbtiles tiles # tiles must not already exist
+positional arguments:
+  input                 Input file or directory
+  output                Output file or directory
 
-        Import a directory of tiles into an mbtiles file:
-        $ mb-util tiles world.mbtiles # mbtiles file must not already exist
+optional arguments:
+  -h, --help            show this help message and exit
+  --scheme {wms,tms,xyz,zyx,gwc,ags}
+                        Tiling scheme of the tiles. Default is "xyz" (z/x/y), other options are "tms" which is also
+                        z/x/y but uses a flipped y coordinate, and "wms" which replicates the MapServer WMS TileCache
+                        directory structure "z/000/000/x/000/000/y.png", and "zyx" which is the format vips dzsave
+                        --layout google uses.
+  --image_format {png,jpg,pbf,webp}, --format {png,jpg,pbf,webp}
+                        The format of the image tiles, either png, jpg, webp or pbf
+  --grid_callback CALLBACK
+                        Option to control JSONP callback for UTFGrid tiles. If grids are not used as JSONP, you can
+                        remove callbacks specifying --grid_callback=""
+  --do_compression      Do mbtiles compression
+  --silent              Dictate whether the operations should run silently
+  --verbose, -v         Verbose output
+```
 
-    Options:
-      -h, --help            Show this help message and exit
-      --scheme=SCHEME       Tiling scheme of the tiles. Default is "xyz" (z/x/y),
-                            other options are "tms" which is also z/x/y
-                            but uses a flipped y coordinate, and "wms" which replicates
-                            the MapServer WMS TileCache directory structure "z/000/000/x/000/000/y.png"''',
-                            and "zyx" which is the format vips dzsave --layout google uses.
-      --image_format=FORMAT
-                            The format of the image tiles, either png, jpg, webp or pbf
-      --grid_callback=CALLBACK
-                            Option to control JSONP callback for UTFGrid tiles. If
-                            grids are not used as JSONP, you can
-                            remove callbacks specifying --grid_callback=""
-      --do_compression      Do mbtiles compression
-      --silent              Dictate whether the operations should run silently
+### Examples
 
+**Export an mbtiles file to a directory of files:**
+```bash
+mb-util world.mbtiles tiles/
+# Note: 'tiles/' directory must not already exist
+```
 
-    Export an `mbtiles` file to files on the filesystem:
+**Import a directory of tiles into an mbtiles file:**
+```bash
+mb-util tiles/ world.mbtiles
+# Note: 'world.mbtiles' file must not already exist
+```
 
-        mb-util World_Light.mbtiles adirectory
+**Export with specific options:**
+```bash
+mb-util --scheme tms --image_format webp terrain.mbtiles output/
+```
 
-
-    Import a directory into a `mbtiles` file
-
-        mb-util directory World_Light.mbtiles
+**Export metadata only:**
+```bash
+mb-util world.mbtiles dumps
+```
 
 ## Requirements
 
-* Python `>= 2.6`
+- Python >= 2.7 (including Python 3.6+)
+- Git (for installation from GitHub)
 
 ## Metadata
 
 MBUtil imports and exports metadata as JSON, in the root of the tile directory, as a file named `metadata.json`.
 
-```javascript
+```json
 {
     "name": "World Light",
     "description": "A Test Metadata",
@@ -86,30 +121,70 @@ MBUtil imports and exports metadata as JSON, in the root of the tile directory, 
 }
 ```
 
-## Testing
+## Updates
 
-This project uses [nosetests](http://readthedocs.org/docs/nose/en/latest/) for testing. Install nosetests:
+To update to the latest version:
 
-    pip install nose
-or
+```bash
+pip install --upgrade git+https://github.com/Australes-Inc/mbutil.git
+```
 
-    easy_install nose
-    
-Then run:
+## Troubleshooting
 
-    nosetests
+### Common Issues
+
+**"git is not recognized"**
+- Install Git from [https://git-scm.com/](https://git-scm.com/)
+
+**"mb-util command not found"**
+- Ensure you've activated the correct environment
+- Try reinstalling: `pip uninstall mbutil && pip install git+https://github.com/Australes-Inc/mbutil.git`
+
+**Permission errors**
+- Use virtual environments instead of system-wide installation
+- On Unix systems, avoid using `sudo` with pip
 
 ## See Also
 
-* [node-mbtiles provides mbpipe](https://github.com/mapbox/node-mbtiles/wiki/Post-processing-MBTiles-with-MBPipe), a useful utility.
-* [mbliberator](https://github.com/calvinmetcalf/mbliberator) a similar program but in node.
+- [Original mbutil](https://github.com/mapbox/mbutil) - The original project this fork is based on
+- [node-mbtiles](https://github.com/mapbox/node-mbtiles) - Node.js implementation with mbpipe utility
+- [MBTiles Specification](https://github.com/mapbox/mbtiles-spec) - Technical specification for MBTiles
 
 ## License
 
-BSD - see LICENSE.md
+BSD 3-Clause License - see [LICENSE.md](LICENSE.md) for details.
 
-## Authors
+**Original work:**
+- Copyright (c) Development Seed
+- Copyright (c) Tom MacWright
 
-- Tom MacWright (tmcw)
-- Dane Springmeyer (springmeyer)
-- Mathieu Leplatre (leplatrem)
+**Modified work:**
+- Copyright (c) 2025 Australes Inc
+- Copyright (c) Diego Posado Bañuls
+
+## Authors and Maintainers
+
+### Original Authors
+- **Tom MacWright** ([@tmcw](https://github.com/tmcw))
+- **Dane Springmeyer** ([@springmeyer](https://github.com/springmeyer))
+- **Mathieu Leplatre** ([@leplatrem](https://github.com/leplatrem))
+
+### Current Maintainer
+- **Diego Posado Bañuls** ([@diegoposba](https://github.com/diegoposba))
+
+## Changelog
+
+### v0.3.1 (2025)
+- ✅ Modern Python packaging with proper entry points
+- ✅ Improved CLI using argparse
+- ✅ Enhanced error handling and user experience
+- ✅ Python 3.6+ compatibility improvements
+- ✅ Better installation
+
+### v0.3.0 (Original)
+- ✅ Preliminary Python 3 support
+- ✅ MBTiles import/export functionality
+
+---
+
+**Note**: This project enhances and modernizes the original mbutil while maintaining full backward compatibility. The original project is no longer actively maintained, which is why this fork was created to provide ongoing support and improvements.
