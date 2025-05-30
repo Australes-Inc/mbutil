@@ -1,6 +1,6 @@
-Original work: Copyright (c) Development Seed Copyright (c) Tom MacWright
+Copyright (c) Development Seed 
 
-Modified work: Copyright (c) 2025 Australes Inc (c) Diego Posado Bañuls
+Copyright (c) 2025 Australes Inc
 
 All rights reserved.
 
