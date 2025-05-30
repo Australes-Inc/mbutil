@@ -1,6 +1,6 @@
 Copyright (c) Development Seed 
 
-Copyright (c) 2025 Australes Inc
+Copyright (c) Enhanced of 2025 Australes Inc
 
 All rights reserved.
 
