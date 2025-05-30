@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mbutil"
+description = "An importer and exporter for MBTiles"
+readme = "README.md"
+requires-python = ">=2.7"
+license = {text = "BSD"}
+authors = [
+    {name = "Tom MacWright/Diego Posado Bañuls", email = "tom@macwright.org/diegoposba@gmail.com"},
+]
+maintainers = [
+    {name = "Mapbox/Australes Inc"},
+]
+keywords = ["mbtiles", "tiles", "mapping", "gis"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/Australes-Inc/mbutil"
+"Bug Reports" = "https://github.com/Australes-Inc/mbutil/issues"
+"Source" = "https://github.com/Australes-Inc/mbutil"
+
+[project.scripts]
+mb-util = "mbutil.cli:main"
+
+[tool.setuptools]
+packages = ["mbutil"]
+
+[tool.setuptools.dynamic]
+version = {attr = "mbutil.__version__"}
