@@ -9,10 +9,10 @@ readme = "README.md"
 requires-python = ">=2.7"
 license = {text = "BSD"}
 authors = [
-    {name = "Tom MacWright/Diego Posado Bañuls", email = "tom@macwright.org/diegoposba@gmail.com"},
+    {name = "Tom MacWright", email = "tom@macwright.org"},
 ]
 maintainers = [
-    {name = "Mapbox/Australes Inc"},
+    {name = "Diego Posado Bañuls (Australes Inc)", email = "diegoposba@gmail.com"},
 ]
 keywords = ["mbtiles", "tiles", "mapping", "gis"]
 classifiers = [

@@ -6,7 +6,8 @@ Supports importing, exporting, and more
 (c) Development Seed 2012
 (c) 2016 ePi Rational, Inc.
 (c) 2025 Australes Inc
-Licensed under BSD
+
+Licensed under BSD 3-Clause License
 """
 
 import logging

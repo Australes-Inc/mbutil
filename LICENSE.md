@@ -1,4 +1,7 @@
-Copyright (c), Development Seed  
+Original work: Copyright (c) Development Seed Copyright (c) Tom MacWright
+
+Modified work: Copyright (c) 2025 Australes Inc (c) Diego Posado Bañuls
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
