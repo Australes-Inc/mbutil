@@ -35,19 +35,15 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     
-    # Point d'entrée pour la ligne de commande
     entry_points={
         'console_scripts': [
             'mb-util=mbutil.cli:main',
         ],
     },
     
-    # Dépendances
     install_requires=[
-        # Pas de dépendances externes pour le moment
     ],
     
-    # Métadonnées PyPI
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -69,6 +65,5 @@ setup(
     license='BSD',
     keywords='mbtiles tiles mapping gis',
     
-    # Pour inclure le script original comme fallback
     scripts=['mb-util'] if os.path.exists('mb-util') else [],
 )

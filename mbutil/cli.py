@@ -94,7 +94,6 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
     
-    # Configure logging
     if args.verbose and not args.silent:
         logging.basicConfig(level=logging.DEBUG)
     elif not args.silent:
@@ -105,7 +104,6 @@ def main():
     input_path = args.input
     output_path = args.output
     
-    # Convert args to dict for compatibility
     options = {
         'scheme': args.scheme,
         'format': args.format,
@@ -115,17 +113,14 @@ def main():
     }
     
     try:
-        # Check if we're doing metadata dump
         if os.path.isfile(input_path) and output_path == "dumps":
             mbtiles_metadata_to_disk(input_path, **options)
             return
         
-        # Export mbtiles to disk
         if os.path.isfile(input_path) and not os.path.exists(output_path):
             mbtiles_to_disk(input_path, output_path, **options)
             return
         
-        # Import directory to mbtiles
         if os.path.isdir(input_path) and not os.path.isfile(input_path):
             if os.path.isfile(output_path):
                 print("Error: Importing tiles into already-existing MBTiles is not yet supported", file=sys.stderr)
@@ -133,7 +128,6 @@ def main():
             disk_to_mbtiles(input_path, output_path, **options)
             return
         
-        # Invalid combination
         if os.path.isfile(input_path) and os.path.exists(output_path):
             print("Error: To export MBTiles to disk, specify a directory that does not yet exist", file=sys.stderr)
             sys.exit(1)
